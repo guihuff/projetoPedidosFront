@@ -7,17 +7,21 @@ import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 
 import Link from 'next/link';
-import { FormEvent, useContext } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 
 export default function Home() {
   const { singIn } = useContext(AuthContext);
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
   async function handleLogin(event: FormEvent) {
     event.preventDefault();
     let data = {
-      email: "teste@teste.com",
-      password: "123456"
+      email,
+      password,
     }
 
     await singIn(data);
@@ -35,10 +39,14 @@ export default function Home() {
             <Input 
               placeholder='Digite o seu email'
               type='text'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <Input 
               placeholder='Digite sua senha'
               type='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
 
             <Button 

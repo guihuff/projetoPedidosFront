@@ -28,8 +28,8 @@ export function AuthProvider({ children }: AuthProviderProps){
   const [user, setUser] = useState<UserProps>();
   const isAuthenticated = !!user;
 
-  async function singIn() {
-    alert('login')
+  async function singIn({ email, password } : SingInProps) {
+    console.log(email, password);
   }
 
   return (
