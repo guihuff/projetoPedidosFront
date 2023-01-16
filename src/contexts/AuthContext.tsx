@@ -10,6 +10,7 @@ type AuthContextData = {
   isAuthenticated: boolean;
   singIn: (credentials: SingInProps) => Promise<void>;
   singOut: () => void;
+  singUp: (credentials: SingUpProps) => Promise<void>
 }
 
 type UserProps = {
@@ -27,6 +28,12 @@ type AuthProviderProps = {
   children: ReactNode;
 }
 
+type SingUpProps = {
+  name: string;
+  password: string;
+  email: string;
+}
+
 export const AuthContext = createContext({} as AuthContextData);
 
 
@@ -35,7 +42,7 @@ export function singOut() {
     destroyCookie(undefined, '@nextauth.token');
     Router.push('/');
   } catch (err) {
-    console.log('erro ao deslogar')
+    console.log('erro ao deslogar', err);
   }
 }
 
@@ -72,8 +79,19 @@ export function AuthProvider({ children }: AuthProviderProps){
     }
   }
 
+  async function singUp(data: SingUpProps) {
+    try{
+      const response = await api.post('/users', data);
+
+      console.log('Foi cadastrado');
+      Router.push('/');
+    } catch (err) {
+      console.log('erro ao cadastrar', err);
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, singIn, singOut }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, singIn, singOut, singUp }}>
       {children}
     </AuthContext.Provider>
   )

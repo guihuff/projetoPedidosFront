@@ -19,12 +19,21 @@ export default function Home() {
 
   async function handleLogin(event: FormEvent) {
     event.preventDefault();
+
+    if(email === '' || password === ''){
+      alert('preencha os campos');
+      return;
+    }
+
+    setLoading(true);
     let data = {
       email,
       password,
     }
 
     await singIn(data);
+
+    setLoading(false);
   }
 
   return (
@@ -50,7 +59,7 @@ export default function Home() {
             />
 
             <Button 
-              loading={false}
+              loading={loading}
               type='submit'
             >
               Entrar

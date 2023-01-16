@@ -7,8 +7,38 @@ import { Input } from '../../components/ui/Input';
 import { Button } from '../../components/ui/Button';
 
 import Link from 'next/link';
+import { FormEvent, useContext, useState } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
 
 export default function SingUp() {
+  const { singUp } = useContext(AuthContext);
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+
+  const [loading, setLoading] = useState(false);
+
+  async function handleSingUp (event: FormEvent){
+    event.preventDefault();
+
+    if(email === '' || password === '' || name === ''){
+      alert('preencha os campos');
+      return;
+    }
+
+    setLoading(true);
+
+    let data = {
+      name,
+      password,
+      email
+    }
+
+    await singUp(data);
+
+    setLoading(false);
+  }
   return (
     <>
       <Head>
@@ -18,25 +48,31 @@ export default function SingUp() {
         <Image src={logoImg} alt='Logo Sujeito Pizzaria' />
         <div className={styles.login}>
           <h1>Criando sua conta</h1>
-          <form>
+          <form onSubmit={handleSingUp}>
             <Input 
               placeholder='Digite o seu nome'
               type='text'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <Input 
               placeholder='Digite o seu email'
-              type='text'
+              type='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <Input 
               placeholder='Digite sua senha'
               type='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
 
             <Button 
-              loading={false}
+              loading={loading}
               type='submit'
             >
-              Entrar
+              Cadastrar
             </Button>
 
           </form>
