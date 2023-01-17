@@ -1,5 +1,5 @@
 import { destroyCookie, parseCookies, setCookie } from 'nookies';
-import { createContext, ReactNode, useState } from 'react';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 import Router from 'next/router';
 import { api } from '../services/apiClient';
 import { setConfig } from 'next/config';
@@ -50,6 +50,24 @@ export function singOut() {
 export function AuthProvider({ children }: AuthProviderProps){
   const [user, setUser] = useState<UserProps>();
   const isAuthenticated = !!user;
+
+  useEffect(() => {
+    const { '@nextauth.token': token } = parseCookies();
+
+    if(token){
+      api.get('/me').then(response => {
+        const { id, name, email } = response.data;
+
+        setUser({
+          id,
+          name,
+          email
+        });
+      }).catch(() => {
+        singOut();
+      });
+    }
+  }, []);
 
   async function singIn({ email, password } : SingInProps) {
     try{
