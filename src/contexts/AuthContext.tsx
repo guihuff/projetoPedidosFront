@@ -55,7 +55,7 @@ export function AuthProvider({ children }: AuthProviderProps){
     const { '@nextauth.token': token } = parseCookies();
 
     if(token){
-      api.get('/me').then(response => {
+      api.get('/my').then(response => {
         const { id, name, email } = response.data;
 
         setUser({
