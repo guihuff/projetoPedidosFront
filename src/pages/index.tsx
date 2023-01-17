@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { FormEvent, useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { toast } from 'react-toastify';
+import { canSSRGuest } from '../utils/canSSRGuest';
 
 export default function Home() {
   const { singIn } = useContext(AuthContext);
@@ -68,7 +69,7 @@ export default function Home() {
 
           </form>
 
-          <Link href="/singup"><a className={styles.text}>Não possui uma conta? Cadastre-se</a></Link>
+          <a className={styles.text}>Não possui uma conta? Solicite ao Gerente</a>
           
 
         </div>
@@ -76,3 +77,9 @@ export default function Home() {
     </>
   )
 }
+
+export const getServerSideProps = canSSRGuest(async (ctx) => {
+  return {
+    props: {}
+  }
+});

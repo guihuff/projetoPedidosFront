@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { FormEvent, useContext, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
+import { canSSRAuth } from '../../utils/canSSRAuth';
 
 export default function SingUp() {
   const { singUp } = useContext(AuthContext);
@@ -86,3 +87,9 @@ export default function SingUp() {
     </>
   )
 }
+
+export const getServerSideProps = canSSRAuth(async (ctx) => {
+  return {
+    props: {}
+  }
+});
