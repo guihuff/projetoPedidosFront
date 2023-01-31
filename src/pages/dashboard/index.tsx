@@ -47,6 +47,26 @@ export default function Dashboard ({ orders }: HomeProps) {
   const [modalItem, setModalItem] = useState<OrderItemProps[]>();
   const [modalVisible, setModalVisible] = useState(false);
 
+  async function handleFinishItem (id: string) {
+    const api = setupAPIClient();
+
+    await api.put('/order/finish', { order_id: id});
+
+    const response = await api.get('/orders');
+
+    setOrderList(response.data);
+
+    setModalVisible(false);
+  }
+
+  async function handleRefreshOrder () {
+    const api = setupAPIClient();
+
+    const response = await api.get('/orders');
+
+    setOrderList(response.data);
+  }
+
   function handleCloseModal () {
     setModalVisible(false);
   }
@@ -76,10 +96,14 @@ export default function Dashboard ({ orders }: HomeProps) {
       <main className={styles.container}>
         <div className={styles.containerHeader}>
           <h1>Últimos Pedidos</h1>
-          <button>
+          <button onClick={handleRefreshOrder}>
             <FiRefreshCcw color="#3FFFa3" size={25}/>
           </button>
         </div>
+
+        {orderList.length === 0 && (
+          <span className={styles.emptyList}>Não há pedidos abertos no momento</span>
+        )}
 
         <article className={styles.listOrders}>
           {orderList.map(item => (
@@ -98,6 +122,7 @@ export default function Dashboard ({ orders }: HomeProps) {
           isOpen={modalVisible}
           onRequestClose={handleCloseModal}
           order={modalItem}
+          handleFinishOrder={handleFinishItem}
         />
       )}
     </div>
