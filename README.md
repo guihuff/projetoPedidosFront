@@ -1,3 +1,26 @@
+# Pizzaria - Interface em React para Sistema de Pedidos e Cadastro de Produtos
+
+Este é um projeto de interface em React para um sistema de criação de pedidos e cadastro de produtos de uma pizzaria. Ele foi desenvolvido como parte de um curso ou disciplina de Programação para Web.
+
+## Funcionalidades
+
+- Criação e visualização de pedidos de pizzas, permitindo a seleção de sabores, tamanhos e quantidades.
+- Cadastro e gerenciamento de produtos, como pizzas, ingredientes e outros itens relacionados à pizzaria.
+- Interação intuitiva para o usuário, com formulários e feedbacks visuais adequados.
+- Armazenamento temporário dos dados no navegador para persistência dos pedidos.
+
+## Personalização
+
+Você pode personalizar o sistema de acordo com as necessidades da pizzaria. Modifique os dados dos produtos e ingredientes no arquivo `src/data/products.js` para adicionar ou alterar os itens disponíveis. Além disso, você pode estilizar a interface alterando as classes CSS no arquivo `src/App.css`.
+
+## Contribuição
+
+Sinta-se à vontade para contribuir com melhorias para este projeto. Se você encontrou um bug, tem uma sugestão de funcionalidade ou deseja adicionar uma nova feature, abra uma [issue](https://github.com/seu-usuario/nome-do-repositorio/issues) ou envie um pull request com suas alterações.
+
+## Licença
+
+Este projeto está licenciado sob a [MIT License](https://opensource.org/licenses/MIT).
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
